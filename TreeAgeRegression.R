@@ -21,19 +21,19 @@ summary(df$AgeYears)
 #   Calculate interquartile range
 #   Calculate low and high fences
 #   List outliers
-q1 <- quantile(df$AgeYears, 0.25, type=1)
-q3 <- quantile(df$AgeYears, 0.75, type=1)
-iqr <- q3 - q1
+age_q1 <- quantile(df$AgeYears, 0.25, type=1)
+age_q3 <- quantile(df$AgeYears, 0.75, type=1)
+age_iqr <- age_q3 - age_q1
 
-min <- min(df$AgeYears, na.rm=TRUE)
-max <- max(df$AgeYears, na.rm=TRUE)
+age_min <- min(df$AgeYears, na.rm=TRUE)
+age_max <- max(df$AgeYears, na.rm=TRUE)
 
 # Calculate the low fence and set it to 0 if it's less
 # than 0. Can't have a tree of negative years old
-low_fence <- q1 - (iqr*1.5)
+low_fence <- age_q1 - (age_iqr*1.5)
 low_fence <- if(low_fence >= 0) low_fence else 0
 
-high_fence <- q3 + (iqr*1.5)
+high_fence <- age_q3 + (age_iqr*1.5)
 
 # Show outliers, if any
 df[df$AgeYears > high_fence,]
@@ -51,11 +51,11 @@ plot(df$DiameterInches,
 abline(model)
 
 # Calculate the residuals
-residuals <- resid(model)
+age_residuals <- resid(model)
 
 # Graph the residuals
 plot(df$DiameterInches,
-     residuals,
+     age_residuals,
      ylab="Residuals of Tree Age in Years",
      xlab="Tree Diameter in Inches",
      main="Residuals of Age of Trees")
